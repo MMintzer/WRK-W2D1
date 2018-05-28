@@ -1,6 +1,6 @@
 # PHASE 2
 
-
+require "byebug"
 def convert_to_int(str)
   begin 
     num = Integer(str)
@@ -40,7 +40,7 @@ class NotAFruitError < StandardError
 end 
 
 def reaction(maybe_fruit)
-  if FRUITS.include? maybe_fruit
+  if FRUITS.include?(maybe_fruit)
     puts "OMG, thanks so much for the #{maybe_fruit}!"
   elsif maybe_fruit.downcase == 'coffee'
     raise CoffeeError.new(maybe_fruit)
@@ -64,11 +64,28 @@ def feed_me_a_fruit
 end  
 
 # PHASE 4
+class FriendError < ArgumentError
+  attr_reader :best_friend, :years_known 
+  
+  def initialize(best_friend, years_known)
+    @best_friend = best_friend
+    @years_known = years_known
+  end 
+  
+  def message 
+    "You known #{best_friend} for only #{years_known} years"
+  end 
+end 
+
 class BestFriend
   def initialize(name, yrs_known, fav_pastime)
     @name = name
     @yrs_known = yrs_known
     @fav_pastime = fav_pastime
+    byebug
+    if @yrs_known < 5 
+      raise FriendError.new(@name, @yrs_known)
+    end 
   end
 
   def talk_about_friendship
@@ -84,4 +101,7 @@ class BestFriend
   end
 end
 
+bob = BestFriend.new("bob", 4, "frisbee")
+puts "?????"
+p "*******"
 
